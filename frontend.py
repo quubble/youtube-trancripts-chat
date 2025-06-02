@@ -13,8 +13,8 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import PromptTemplate
 
 # Load environment variables
-load_dotenv()
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+#load_dotenv()
+#GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 st.title("🎬 YouTube Video Transcript Q&A (Chat Mode)")
 
