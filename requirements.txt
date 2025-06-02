@@ -1,0 +1,16 @@
+
+dotenv
+streamlit>=1.25
+python-dotenv
+youtube-transcript-api
+langchain
+langchain-google-genai
+langchain-community
+youtube-transcript-api
+langchain
+langchain-google-genai
+langchain-community
+faiss-cpu
+
+
+#pip install -r requirements.txt
