@@ -5,7 +5,7 @@ import youtube_transcript_api
 
 
 import streamlit as st
-api_key = st.secrets["google_api_key"]
+google_api_key = st.secrets["google_api_key"]
 import os
 from dotenv import load_dotenv
 
