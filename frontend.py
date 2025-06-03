@@ -7,7 +7,7 @@ import youtube_transcript_api
 import streamlit as st
 GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
 import os
-#from dotenv import load_dotenv
+from dotenv import load_dotenv
 
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import PromptTemplate
