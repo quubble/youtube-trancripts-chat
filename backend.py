@@ -5,7 +5,39 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_community.vectorstores import FAISS
 from typing import Dict, Any
+import re
+from urllib.parse import urlparse, parse_qs
 
+
+
+
+def get_youtube_video_id(url: str) -> str:
+    """
+    Extract the video ID from a YouTube URL.
+    Supports both 'youtube.com/watch?v=ID' and 'youtu.be/ID' formats.
+    Returns the video ID as a string, or None if not found.
+    """
+    parsed_url = urlparse(url)
+    
+    # Format 1: https://www.youtube.com/watch?v=VIDEO_ID
+    if 'youtube.com' in parsed_url.netloc:
+        query_params = parse_qs(parsed_url.query)
+        if 'v' in query_params:
+            return query_params['v'][0]
+
+    # Format 2: https://youtu.be/VIDEO_ID
+    if 'youtu.be' in parsed_url.netloc:
+        # The first part of the path is the video id
+        video_id = parsed_url.path.lstrip('/')
+        if video_id:
+            return video_id
+
+    # Fallback: Try to extract using regex (for robustness)
+    match = re.search(r'(?:v=|\/)([0-9A-Za-z_-]{11})', url)
+    if match:
+        return match.group(1)
+
+    return None
 
 
 
@@ -16,7 +48,9 @@ def get_youtube_transcript(url: str) -> str:
     """
     try:
         # Extract the video ID from the URL
-        video_id = url.split("v=")[1].split("&")[0]
+        #video_id = url.split("v=")[1].split("&")[0]
+        video_id = get_youtube_video_id(url)
+        
         # Fetch the transcript (English)
         transcript_list = YouTubeTranscriptApi.get_transcript(video_id, languages=["en"])
         # Flatten to plain text
